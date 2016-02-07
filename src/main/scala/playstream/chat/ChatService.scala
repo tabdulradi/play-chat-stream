@@ -10,6 +10,10 @@ import play.api.routing.sird._
 
 class ChatService(mediator: ActorRef) {
   val routes: Router.Routes = {
+    case POST(p"/$room?msg=$msg") => Action {
+      mediator ! DistributedPubSubMediator.Publish(room, msg)
+      Results.Created(s"Sent: $msg to room $room")
+    }
     case GET(p"/$room") => WebSocket.accept[String, String] { request =>
       ChatService.topicFlow[String](mediator, room)
     }
