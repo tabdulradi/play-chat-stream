@@ -1,11 +1,10 @@
 package playstream.main
 
-import playstream.hello.HelloWorldService
+import playstream.echo.EchoService
 
 object Main {
   def main(args: Array[String]): Unit = {
-    val app = new HelloWorldService
+    val app = new EchoService
     app.start()
-    app.stop()
   }
 }
