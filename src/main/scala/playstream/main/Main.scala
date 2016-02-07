@@ -5,7 +5,7 @@ import akka.cluster.pubsub.DistributedPubSub
 import com.typesafe.config.ConfigFactory
 import playstream.api.CompositeService
 import playstream.api.play.PlayService
-import playstream.chat.ChatService
+import playstream.chat.{ ChatBotsService, ChatService }
 import playstream.echo.EchoService
 
 object Main {
@@ -15,7 +15,8 @@ object Main {
 
     val playService = new PlayService(
       "/echo" -> EchoService.routes,
-      "/chat" -> new ChatService(mediator).routes
+      "/chat" -> new ChatService(mediator).routes,
+      "/bots" -> new ChatBotsService()(system).routes
     )
 
     val app = new CompositeService(playService)
