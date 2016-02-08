@@ -11,6 +11,18 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-simple" % "1.7.14"
 )
 
+initialCommands += """
+  |import akka.actor.ActorSystem
+  |import akka.stream._
+  |import akka.stream.scaladsl._
+  |implicit val system = ActorSystem("playchatstreamconsole")
+  |implicit val materializer = ActorMaterializer()
+                   """.stripMargin
+
+cleanupCommands += """
+  |system.shutdown()
+                   """.stripMargin
+
 scalariformSettings
 
 fork in run := true
