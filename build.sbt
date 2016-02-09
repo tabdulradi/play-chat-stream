@@ -12,11 +12,13 @@ libraryDependencies ++= Seq(
 )
 
 initialCommands += """
-  |import akka.actor.ActorSystem
+  |import akka.actor.{ Props, ActorRef, Actor, ActorSystem }
   |import akka.stream._
   |import akka.stream.scaladsl._
   |implicit val system = ActorSystem("playchatstreamconsole")
   |implicit val materializer = ActorMaterializer()
+  |implicit val ec = system.dispatcher
+  |val mediator = system.actorOf(Props(new playstream.main.FakeMediator))
                    """.stripMargin
 
 cleanupCommands += """
