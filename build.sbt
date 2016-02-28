@@ -28,3 +28,5 @@ cleanupCommands += """
 scalariformSettings
 
 fork in run := true
+
+lazy val root = (project in file(".")).enablePlugins(SbtTwirl)

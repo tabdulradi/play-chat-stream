@@ -1,0 +1,28 @@
+@(room: String)
+
+<h1>Welcome to @room chatroom</h1>
+
+<ul id="messages"></ul>
+
+<form onsubmit="return send(this)">
+    <input type="text" placeholder="message" />
+    <input type="submit" value="send" />
+</form>
+
+<script>
+var socket = new WebSocket("ws://" + location.host + location.pathname + "/ws");
+var messages = document.getElementById("messages");
+socket.onmessage = function (event) {
+    var li = document.createElement("li");
+    var text = document.createTextNode(event.data);
+    li.appendChild(text);
+    messages.appendChild(li);
+}
+function send(form) {
+    var input = form.children[0];
+    socket.send(input.value)
+    input.value = "";
+    return false;
+}
+</script>
+
